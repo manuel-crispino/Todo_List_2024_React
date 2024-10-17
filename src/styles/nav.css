@@ -1,0 +1,32 @@
+.nav {
+    background-color: white;
+    display: flex;          /* Imposta il contenitore come flexbox */
+    justify-content: center; /* Allinea gli elementi orizzontalmente */
+    height: 3rem;
+    padding-top:2%;
+  }
+  
+  .nav-ul {
+    list-style: none;        /* Rimuove i pallini della lista */
+    padding: 0;              /* Rimuove il padding predefinito */
+    margin: 0;               /* Rimuove il margine predefinito */
+    display: flex;           /* Imposta la lista come flexbox */
+    flex-direction: row;     /* Allinea gli elementi in orizzontale */
+  }
+  
+  .nav-ul li {
+    margin-right: 20px;      /* Aggiunge spazio tra gli elementi */
+  }
+  
+  .nav-ul li:last-child {
+    margin-right: 0;         /* Rimuove lo spazio dall'ultimo elemento */
+  }
+
+  .nav-ul a {
+text-decoration: none;
+color: black;
+  }
+  .nav-ul a:hover{
+    outline: solid 2px red;
+      }
+  

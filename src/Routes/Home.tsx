@@ -1,5 +1,5 @@
 import React from "react";
-import TodoList from "../components/list";
+import TodoList from "../components/todo-list/list";
 
 
 export default function Home (){

@@ -1,7 +1,7 @@
 import React,{useState} from "react";
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import AddItem from "./addItem";
 import Pagination from "./pagination";
+import TodoItem from "./todoItem";
 
 export default function TodoList(){
 const [item,setItem]=useState<string>("");
@@ -31,12 +31,6 @@ function removeItem(index: number) { // Cambia il tipo di index a number
     setListItem(prevItems => prevItems.filter((_, i) => i !== index)); // Rimuovi l'elemento
 }
 
-function checkKey(e:React.KeyboardEvent<HTMLInputElement>){
-const keyDown= e.key;
-if (keyDown === "Enter"){
-    handleList(); /* on enter insert into the list */
-}
-}
 
  // Funzione per aggiornare gli elementi della pagina corrente
  function handlePageChange(currentItems: string[],currentPage:number) {
@@ -50,53 +44,29 @@ if (keyDown === "Enter"){
     }
 
  //styles 
-const hideInputNewItem = isAddItemClicked? "" : "hide" ;
-const addText = isAddItemClicked? "cancel" : "add item" ;
+
+const addText = isAddItemClicked? "hide inputs" : "add item" ;
 return(
     <div className="list-map ">
     <h3 className="text-center">To-do-list</h3>
     <ul className="no-ul">
         {currentItems.map((newItem,index)=>(
-        <li  key={index} className="no-ul flex ">
-
-           <div className="flex-1 text-left">
-            <span>{getGlobalIndex(index)})</span>
-            </div >
-
-            <div className="flex-2 text-right">
-            <span >{newItem}</span>
-            </div>
-
-            <div className="flex-1 ">
-            <input  className="text-right check-box " type="checkbox"  title="checkbox"/>
-            </div>
-
-            <div className="flex-1 text-left">
-                <button type="button" className="no-input-style delete-btn" onClick={()=>removeItem(index)}>
-                    {<DeleteIcon fontSize="small"/>} 
-                </button>
-            </div>
-
-        </li>
+        <TodoItem 
+            index={index}
+            globalIndex={getGlobalIndex(index)} 
+            newItem={newItem} 
+            onRemove={removeItem} 
+        />
         ))}
         <li>
          <hr className="solid-line" />
          </li>
-        <li className={`${hideInputNewItem} no-ul flex`}> 
-        <div className="flex-2 text-right">
-        <input
-            className="input-message  " 
-            placeholder="write here.. " type="text" 
-            value={item} onKeyDown={(e)=>checkKey(e)} 
-            onChange={handleInput} 
-          />
-        </div>
-        <div className="flex-1 text-left margin-left-10 ">
-            <button type="button" className="round-btn" onClick={()=>(handleList(),addItem())}>
-                {<AddIcon fontSize="small"/>}
-            </button>
-            </div>
-        </li>
+      <AddItem    
+        item={item}
+        onInputChange={handleInput}
+        onAdd={() => (handleList())}
+        isVisible={isAddItemClicked}
+        />
         
     </ul>
     <div className="text-center"> 
@@ -111,3 +81,5 @@ return(
 </div>
 )
 }
+
+

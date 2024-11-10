@@ -1,5 +1,5 @@
 .nav {
-    background-color: white;
+    background-color: rgb(248, 238, 217);
     display: flex;          /* Imposta il contenitore come flexbox */
     justify-content: center; /* Allinea gli elementi orizzontalmente */
     height: 3rem;
@@ -15,7 +15,7 @@
   }
   
   .nav-ul li {
-    margin-right: 20px;      /* Aggiunge spazio tra gli elementi */
+    margin-right: 100px;      /* Aggiunge spazio tra gli elementi */
   }
   
   .nav-ul li:last-child {
@@ -30,3 +30,8 @@ color: black;
     outline: solid 2px red;
       }
   
+
+.nav-text{
+font-size: x-large;
+
+}

@@ -1,11 +1,15 @@
 import React,{useState} from "react";
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Pagination from "./pagination";
 
 export default function TodoList(){
-    const [item,setItem]=useState<string>("");
+const [item,setItem]=useState<string>("");
 const [listItem,setListItem]=useState<string[]>([]);
+const [currentItems,setCurrentItems]=useState<string[]>([]);
 const [isAddItemClicked,setAddItemClicked]=useState<boolean>(false);
+const [currentPage, setCurrentPage] = useState<number>(1); // Aggiungi stato per la pagina corrente
+const itemsPerPage:number=8;
 
 function addItem(){
     setAddItemClicked(!isAddItemClicked);
@@ -34,25 +38,45 @@ if (keyDown === "Enter"){
 }
 }
 
+ // Funzione per aggiornare gli elementi della pagina corrente
+ function handlePageChange(currentItems: string[],currentPage:number) {
+    setCurrentItems(currentItems);
+    setCurrentPage(currentPage); 
+}
+
+    // Calcola l'indice globale dell'elemento
+    function getGlobalIndex(index: number) {
+        return (currentPage - 1) * itemsPerPage + index + 1;
+    }
+
+ //styles 
 const hideInputNewItem = isAddItemClicked? "" : "hide" ;
 const addText = isAddItemClicked? "cancel" : "add item" ;
 return(
     <div className="list-map ">
     <h3 className="text-center">To-do-list</h3>
     <ul className="no-ul">
-        {listItem.map((newItem,index)=>(
+        {currentItems.map((newItem,index)=>(
         <li  key={index} className="no-ul flex ">
+
+           <div className="flex-1 text-left">
+            <span>{getGlobalIndex(index)})</span>
+            </div >
+
+            <div className="flex-2 text-right">
+            <span >{newItem}</span>
+            </div>
+
             <div className="flex-1 ">
             <input  className="text-right check-box " type="checkbox"  title="checkbox"/>
             </div>
-            <div className="flex-2 text-left">
-            <span >{newItem}</span>
-            </div>
+
             <div className="flex-1 text-left">
                 <button type="button" className="no-input-style delete-btn" onClick={()=>removeItem(index)}>
                     {<DeleteIcon fontSize="small"/>} 
                 </button>
             </div>
+
         </li>
         ))}
         <li>
@@ -64,7 +88,7 @@ return(
             className="input-message  " 
             placeholder="write here.. " type="text" 
             value={item} onKeyDown={(e)=>checkKey(e)} 
-            onInput={handleInput} 
+            onChange={handleInput} 
           />
         </div>
         <div className="flex-1 text-left margin-left-10 ">
@@ -80,7 +104,9 @@ return(
         {addText}
         </button>
         </div>
-   
+
+        <Pagination itemsPerPage={itemsPerPage} onPageChange={handlePageChange} listItems={listItem}/>
+      
   
 </div>
 )

@@ -9,7 +9,11 @@ const [listItem,setListItem]=useState<string[]>([]);
 const [currentItems,setCurrentItems]=useState<string[]>([]);
 const [isAddItemClicked,setAddItemClicked]=useState<boolean>(false);
 const [currentPage, setCurrentPage] = useState<number>(1); // Aggiungi stato per la pagina corrente
+const [completedTasks, setCompletedTasks] = useState<number>(0);
 const itemsPerPage:number=8;
+const totalItems:number=listItem.length;
+
+
 
 function addItem(){
     setAddItemClicked(!isAddItemClicked);
@@ -27,8 +31,9 @@ function handleList(){
 }
 }
 
-function removeItem(index: number) { // Cambia il tipo di index a number
-    setListItem(prevItems => prevItems.filter((_, i) => i !== index)); // Rimuovi l'elemento
+function removeItem(index: number) {
+    const globalIndex = getGlobalIndex(index) - 1; // Ottieni l'indice globale
+    setListItem((prevItems) => prevItems.filter((_, i) => i !== globalIndex));
 }
 
 
@@ -43,21 +48,27 @@ function removeItem(index: number) { // Cambia il tipo di index a number
         return (currentPage - 1) * itemsPerPage + index + 1;
     }
 
- //styles 
+    function handleCheckboxChange(isChecked: boolean) {
+        setCompletedTasks((prev) => (isChecked ? prev + 1 : prev - 1));
+    }
 
+ //styles 
 const addText = isAddItemClicked? "hide inputs" : "add item" ;
 return(
     <div className="list-map ">
     <h3 className="text-center">To-do-list</h3>
     <ul className="no-ul">
+    
         {currentItems.map((newItem,index)=>(
         <TodoItem 
             index={index}
             globalIndex={getGlobalIndex(index)} 
             newItem={newItem} 
             onRemove={removeItem} 
+            onCheckboxChange={handleCheckboxChange} // Passa la funzione di callback
         />
         ))}
+
         <li>
          <hr className="solid-line" />
          </li>
@@ -67,17 +78,16 @@ return(
         onAdd={() => (handleList())}
         isVisible={isAddItemClicked}
         />
-        
+        <li><span>total items : {totalItems}</span></li>
+        <li><span>completed tasks : {completedTasks}</span></li>
+
     </ul>
     <div className="text-center"> 
         <button className="button-container" type="button" onClick={addItem}>
         {addText}
         </button>
         </div>
-
         <Pagination itemsPerPage={itemsPerPage} onPageChange={handlePageChange} listItems={listItem}/>
-      
-  
 </div>
 )
 }

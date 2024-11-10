@@ -6,12 +6,21 @@ index:number;
 globalIndex:number;
 newItem:string;
 onRemove:(index:number)=>void;
+onCheckboxChange: (isChecked: boolean) => void; // Aggiungi callback per comunicare il cambio
 }
 
-export default function TodoItem({index,globalIndex,newItem,onRemove}:TodoItemProps){
+export default function TodoItem({index,globalIndex,newItem,onRemove,onCheckboxChange}:TodoItemProps){
+   
+     const [isChecked, setIsChecked] = React.useState<boolean>(false); 
+    function handleCheckboxChange(event: React.ChangeEvent<HTMLInputElement>) {
+        const checked = event.target.checked;
+        setIsChecked(checked);
+        onCheckboxChange(checked); // Aggiorna il conteggio nel componente principale
+    }
+
+
     return(
         <li  key={index} className="no-ul flex ">
-
            <div className="flex-1 text-left">
             <span>{globalIndex})</span>
             </div >
@@ -21,7 +30,8 @@ export default function TodoItem({index,globalIndex,newItem,onRemove}:TodoItemPr
             </div>
 
             <div className="flex-1 ">
-            <input  className="text-right check-box " type="checkbox"  title="checkbox"/>
+            <input  className="text-right check-box " type="checkbox"  title="checkbox"  checked={isChecked}
+                    onChange={handleCheckboxChange}/>
             </div>
 
             <div className="flex-1 text-left">
@@ -29,7 +39,7 @@ export default function TodoItem({index,globalIndex,newItem,onRemove}:TodoItemPr
                     {<DeleteIcon fontSize="small"/>} 
                 </button>
             </div>
-
+            
         </li>
     )
 }

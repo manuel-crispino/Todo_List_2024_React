@@ -1,5 +1,5 @@
 .nav {
-    background-color: rgb(248, 238, 217);
+    background-color: rgb(90, 138, 171);
     display: flex;          /* Imposta il contenitore come flexbox */
     justify-content: center; /* Allinea gli elementi orizzontalmente */
     height: 3rem;
@@ -24,14 +24,20 @@
 
   .nav-ul a {
 text-decoration: none;
-color: black;
+color: rgb(255, 251, 251);
   }
   .nav-ul a:hover{
-    outline: solid 2px red;
+    outline: solid 2px rgb(255, 194, 87);
       }
-  
-
+ .nav-ul a:active{
+  outline: solid 2px rgb(255, 87, 87);
+ }
+ .active {
+  outline: solid 2px rgb(255, 83, 83); /* Bordo rosso che rimane attivo dopo il click */
+   margin-bottom: 5%;
+   padding: 0;
+}
 .nav-text{
-font-size: x-large;
+font-size: large;
 
 }

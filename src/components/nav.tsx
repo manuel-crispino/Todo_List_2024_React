@@ -9,14 +9,21 @@ export default function Nav(){
         { route: "/contacts", text: "Contacts" }
     ]
 };
+ // Stato per tenere traccia del link attivo
+ const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
+
+ // Funzione che gestisce il click sul link
+ const handleActive = (index: number) => {
+   setActiveIndex(index);
+ };
 
     return (
         <div>
         <nav className="nav">
         <ul className="nav-ul">
           {NavText.elements.map((item:{route:string,text:string},index)=>(
-          <li key={index} className="nav-text" >
-            <Link to={item.route} >{item.text}</Link>
+          <li key={index} className={activeIndex === index ? 'active nav-text' : 'nav-text'} >
+            <Link onClick={()=>handleActive(index)} to={item.route} >{item.text}</Link>
           </li>))}
         </ul>
       </nav>

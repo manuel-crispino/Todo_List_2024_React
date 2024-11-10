@@ -60,7 +60,7 @@ export default function Pagination({ listItems, itemsPerPage, onPageChange }:Pro
     return (
         <div >
             {/* Mostra i pulsanti di paginazione solo se ci sono più di 10 elementi */}
-            {listItems.length > itemsPerPage && (
+            {listItems.length > itemsPerPage-1 && (
                 <div className="pagination">
                     {Array.from({ length: totalPages }, (_, index) => (
                         <button

@@ -16,7 +16,7 @@
 }
 
 .list-map{
-  background-color: rgb(249, 236, 184);
+  background-color: rgb(255, 255, 255);
   padding: 2%;
   margin: 0 35%; 
   display: flex;
@@ -73,8 +73,6 @@ margin-bottom: 5%;
     text-align: right;
   }
 
-
- 
   .check-box{
  align-items: center;
  margin-left:20%;
@@ -112,6 +110,6 @@ margin-bottom: 5%;
   width: 100%;
  }
 
-.active{
-  background-color: aqua;
-}
+ .text-white{
+color:white;
+ }
